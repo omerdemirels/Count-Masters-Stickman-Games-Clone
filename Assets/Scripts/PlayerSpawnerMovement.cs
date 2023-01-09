@@ -14,7 +14,7 @@ public class PlayerSpawnerMovement : MonoBehaviour
     void Start()
     {
         isPlayerMoving = true;
-        SpawnPlayer();
+        //SpawnPlayer();
     }
 
     // Update is called once per frame
@@ -34,13 +34,27 @@ public class PlayerSpawnerMovement : MonoBehaviour
         Vector3 playerPosition = new Vector3(newXValue, transform.position.y, transform.position.z + zSpeed * Time.deltaTime);
         transform.position = playerPosition;
     }
-    public void SpawnPlayer()
+    public void SpawnPlayer(int gateValue, GateSign gateSign)
     {
-        for (int i = 0; i < 7; i++)
+
+        if (gateSign == GateSign.additionSign)
         {
-            GameObject newPlayer = Instantiate(player, GetPlayerPos(), Quaternion.identity, transform);
-            playersList.Add(newPlayer);
+            for (int i = 0; i < gateValue; i++)
+            {
+                GameObject newPlayer = Instantiate(player, GetPlayerPos(), Quaternion.identity, transform);
+                playersList.Add(newPlayer);
+            }
         }
+        else if (gateSign == GateSign.multiplySign)
+        {
+            int newPlayerCount = (playersList.Count * gateValue) - playersList.Count;
+            for (int i = 0; i < newPlayerCount; i++)
+            {
+                GameObject newPlayer = Instantiate(player, GetPlayerPos(), Quaternion.identity, transform);
+                playersList.Add(newPlayer);
+            }
+        }
+       
         
     }
     public Vector3 GetPlayerPos()
@@ -55,5 +69,10 @@ public class PlayerSpawnerMovement : MonoBehaviour
         {
             isPlayerMoving = false;
         }
+    }
+    public void PlayerKill(GameObject player)
+    {
+        playersList.Remove(player);
+        Destroy(player);
     }
 }
