@@ -6,11 +6,12 @@ TagManager:
   tags:
   - FinishLine
   - PlayerSpawner
+  - EnemyPoints
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Wall
   - Water
   - UI
   - 
